@@ -19,7 +19,7 @@ if (!MESSAGE) {
 }
 
 const submissionCount = 1000000000;
-const delayMs = 100;
+const delayMs = 700;
 
 async function main() {
   const formUrl = new URL(
