@@ -1,6 +1,6 @@
 import generateMessage from "./text.js";
 const FORM_ID = "1FAIpQLScwKil-watvIwXz_vAZp7n0OBFAShSQ7HIWnoQ3sngr_1Ustw";
-const ENTRY_ID = "1702265358";
+const ENTRY_ID = "1058785033";
 const MESSAGE = "text";
 
 if (!/^[A-Za-z0-9_-]+$/.test(FORM_ID)) {
