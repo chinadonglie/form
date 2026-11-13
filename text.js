@@ -21,6 +21,12 @@ const messages = [
   "nedu 10cr sheru bhai de account il ninn join now",
   "sheru bhai started a new cryto called sheru crpto and it is going to be the next big thing",
   "we are back but this time louder ❌ we are going but this time deafer ✅",
+  "ente budhi vimanam aanonn arinjuda but ninte budhi vaanam thanne",
+  "padipura veetil krishnettane padmavati jolikk vechatho",
+  "shawayi vecha kozhikk vayarelakiyal athne entha vilikka",
+  "science mukalilott urine thazhott nee engott",
+  "naslen kazhikunna lollipop nte brand ethaanenn ariyo"
+  
 ];
 
 function generateMessage() {
