@@ -20,13 +20,14 @@ if (!MESSAGE) {
 
 const submissionCount = 1000000000;
 const delayMs = 700;
+const cont = 1;
 
 async function main() {
   const formUrl = new URL(
     `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`,
   );
 
-  for (let index = 0; index < submissionCount; index = 1) {
+  for (let index = 0; cont < submissionCount; index += 1) {
     const body = new URLSearchParams({ [`entry.${ENTRY_ID}`]: generateMessage() }).toString();
     const response = await fetch(formUrl, {
       method: "POST",
