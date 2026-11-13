@@ -1,52 +1,45 @@
 import generateMessage from "./text.js";
-const FORM_ID = "1FAIpQLScwKil-watvIwXz_vAZp7n0OBFAShSQ7HIWnoQ3sngr_1Ustw";
+
+const FORM_ID =
+  "1FAIpQLScwKil-watvIwXz_vAZp7n0OBFAShSQ7HIWnoQ3sngr_1Ustw";
+
 const ENTRY_ID = "1058785033";
-const MESSAGE = "text";
-
-if (!/^[A-Za-z0-9_-]+$/.test(FORM_ID)) {
-  console.error("Set FORM_ID to the ID from your Google Forms link.");
-  process.exit(1);
-}
-
-if (!/^\d+$/.test(ENTRY_ID)) {
-  console.error("Set ENTRY_ID to the numeric part of the field ID.");
-  process.exit(1);
-}
-
-if (!MESSAGE) {
-  console.error("Set MESSAGE to the text to submit.");
-  process.exit(1);
-}
-
-const submissionCount = 1000000000;
-const delayMs = 700;
-const cont = 1;
 
 async function main() {
   const formUrl = new URL(
-    `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`,
+    `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`
   );
 
-  for (let index = 0; cont < submissionCount; index += 1) {
-    const body = new URLSearchParams({ [`entry.${ENTRY_ID}`]: generateMessage() }).toString();
-    const response = await fetch(formUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body,
-      redirect: "manual",
-    });
+  const message = generateMessage();
 
-    console.log(`Submission ${index + 1}/${submissionCount}: HTTP ${response.status}`);
+  const body = new URLSearchParams({
+    [`entry.${ENTRY_ID}`]: message,
+  });
 
-    if (index < submissionCount - 1) {
-      await new Promise((resolve) => setTimeout(resolve, delayMs));
-    }
+  const response = await fetch(formUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body,
+    redirect: "manual",
+  });
+
+  console.log("Message:", message);
+  console.log("HTTP Status:", response.status);
+  console.log("Response URL:", response.url);
+  console.log("Redirect:", response.headers.get("location"));
+
+  if (response.status === 400) {
+    console.log("Google Forms rejected the request.");
+  } else if (response.status === 302 || response.status === 303) {
+    console.log("Google Forms returned a redirect.");
+  } else {
+    console.log("Check the response status and form configuration.");
   }
-
-  console.log("Finished. Check the form responses to confirm they were recorded.");
 }
 
 main().catch((error) => {
-  console.error(`Submission stopped: ${error.message}`);
+  console.error("Submission error:", error.message);
   process.exitCode = 1;
 });
